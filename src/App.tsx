@@ -1,26 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {Button, Container, Grid, Typography, Pagination} from "@mui/material";
+import CurrentComics from "./components/CurrentComics";
+import ComicsHistory from "./components/ComicsHistory";
+import axios from "axios";
+import {IComics} from "./models";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    const [comics, setComics] = useState<IComics>()
+
+    async function getRandomComics() {
+        const response = await axios.get<IComics>('https://localhost:7198/api/Comics/GetComics')
+        setComics(response.data)
+    }
+
+    return (
+        <Grid
+            container
+            spacing={5}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            style={{
+                minHeight: '100vh',
+                backgroundImage: 'url(/cyan.jpg)',
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat'
+            }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+            {comics &&
+                <Grid item>
+                    <CurrentComics comics={comics}/>
+                </Grid>
+            }
+
+            <Grid item>
+                <Button variant="contained" onClick={getRandomComics}>
+                    Показать случайный комикс
+                </Button>
+            </Grid>
+
+            <Grid item>
+                <Container/>
+            </Grid>
+
+            <Grid item>
+                <Typography gutterBottom variant="h4" component="div">
+                    История комиксов
+                </Typography>
+            </Grid>
+
+            <Grid item>
+                <ComicsHistory/>
+            </Grid>
+
+            <Grid item>
+                <Pagination count={10} />
+            </Grid>
+
+        </Grid>
+    );
 }
 
 export default App;
