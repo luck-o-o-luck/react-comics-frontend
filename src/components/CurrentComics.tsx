@@ -8,10 +8,10 @@ interface CurrentComicsProps {
 
 const CurrentComics = ({comics} : CurrentComicsProps) => {
     return (
-        <Card>
+        <Card sx={{marginTop: 4}}>
             <CardMedia
                 component="img"
-                alt="green iguana"
+                alt={comics.title}
                 image={comics.img}
             />
             <CardContent>

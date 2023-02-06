@@ -1,21 +1,39 @@
 import React from 'react';
 import {Button, Card, CardActionArea, CardActions, CardMedia, Grid} from "@mui/material";
+import {IComics} from "../models";
 
-const ComicsHistoryItem = () => {
+interface ComicsHistoryItemProps {
+    comics: IComics
+    removeComics: (comics: IComics) => void
+    showComicsFromHistory: (comics: IComics) => void
+}
+
+const ComicsHistoryItem = ({comics, removeComics, showComicsFromHistory}: ComicsHistoryItemProps) => {
     return (
         <Grid item>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card>
                 <CardActionArea>
                     <CardMedia
                         component="img"
-                        height="140"
-                        image="https://imgs.xkcd.com/comics/landscape_cropped_(1).jpg"
-                        alt="green iguana"
+                        height="200"
+                        image={comics.img}
+                        alt={comics.title}
                     />
                 </CardActionArea>
                 <CardActions>
-                    <Button size="small" color="primary">
-                        Ссылка
+                    <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => showComicsFromHistory(comics)}
+                    >
+                        Показать
+                    </Button>
+                    <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => removeComics(comics)}
+                    >
+                        Удалить
                     </Button>
                 </CardActions>
             </Card>
