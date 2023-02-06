@@ -6,7 +6,7 @@ interface CurrentComicsProps {
     comics: IComics
 }
 
-const CurrentComics = ({comics} : CurrentComicsProps) => {
+const CurrentComics = ({comics}: CurrentComicsProps) => {
     return (
         <Card sx={{marginTop: 4}}>
             <CardMedia
